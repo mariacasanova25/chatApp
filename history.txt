@@ -1,0 +1,3 @@
+Sender: 0 plaintext: default 
+Sender: 4 plaintext: bonjour
+Sender: 4 plaintext: byeSender: 4 plaintext: ola
