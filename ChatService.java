@@ -3,12 +3,12 @@ import java.rmi.*;
 import java.util.*;
 
 public interface ChatService extends Remote {
-	public int join(InfoClient client)  throws RemoteException;
+	public void join(InfoClient client)  throws RemoteException, Exception;
 
-    public int leave(InfoClient client) throws RemoteException;
+    public void leave(InfoClient client) throws RemoteException, Exception;
 
    
-    public int send(String message,InfoClient sender) throws RemoteException;
+    public void send(String message,InfoClient sender) throws RemoteException,Exception;
 
     public ArrayList<String> getHistory(InfoClient client) throws RemoteException, Exception; 
 
