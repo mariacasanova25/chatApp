@@ -1,4 +1,4 @@
-import java.rmi.*;
+
 import java.rmi.registry.*;
 import java.rmi.server.*;
 import java.util.ArrayList;
@@ -13,28 +13,28 @@ public class Client {
                 return;
             }
 
-            //Casting arguments
+            // Casting arguments
             String host = args[0];
 
             InfoClientImpl client = new InfoClientImpl(Integer.parseInt(args[1]));
             InfoClient infoClient = (InfoClient) UnicastRemoteObject.exportObject(client, 0);
             Registry registry = LocateRegistry.getRegistry(host);
 
-            //Lookup in the RMI tregistery the chat service of the server side
+            // Lookup in the RMI tregistery the chat service of the server side
             ChatService chatService = (ChatService) registry.lookup("ChatService");
 
-            //Defining vars for the clients commands processing
+            // Defining vars for the clients commands processing
             Scanner scanner = new Scanner(System.in);
             String line;
             String[] command;
-            int res;
 
-            //Looping on clients commands
+            // Looping on clients commands
             while (true) {
 
                 line = scanner.nextLine();
                 command = line.split(" ");
-                //Note : guards (user has joined the group, etc, are checked on the backend part and throws exceptions)
+                // Note : guards (user has joined the group, etc, are checked on the backend
+                // part and throws exceptions)
                 try {
                     switch (command[0]) {
 
@@ -55,9 +55,11 @@ public class Client {
 
                         case "history":
                             ArrayList<String> history = chatService.getHistory(infoClient);
+
                             if (history.size() != 0) {
                                 for (int i = 0; i < history.size(); i++) {
-                                    System.out.println(history.get(i));
+                                    if (history.get(i) != null)
+                                        System.out.println(history.get(i));
                                 }
                             } else {
                                 System.out.println("no messages yet");
@@ -66,7 +68,6 @@ public class Client {
 
                     }
                 } catch (Exception e) {
-                    System.out.println("SWITCH ERROR");
                     System.out.println(e.getMessage());
                 }
             }

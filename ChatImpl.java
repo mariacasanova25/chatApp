@@ -1,32 +1,29 @@
 
 import java.rmi.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.*;
-import java.nio.*;
 import java.io.*;
 
 public class ChatImpl implements ChatService {
 
-    File users; //Store users registered in the group(Since there is only one, there is no need to store couples (user/groups)
-    File history;
-    ArrayList<String> historyArray; //Object sent to the client (instead of passing a file)
-    FileWriter writer;
-    FileWriter writerUsers;
-    BufferedReader readerHistory;
-    BufferedReader readerUsers;
-
+    private File users; // Store users registered in the group(Since there is only one, there is no need
+    // to store couples (user/groups)
+    private File history;
+    private ArrayList<String> historyArray; // Object sent to the client (instead of passing a file)
+    private FileWriter writer;
+    private FileWriter writerUsers;
+    private BufferedReader readerHistory;
+    private BufferedReader readerUsers;
 
     public ChatImpl() {
         historyArray = new ArrayList<String>();
         users = new File("users.txt");
         history = new File("history.txt");
-        fillHistory(); //Loading message history from previous session (percistency)
+        fillHistory(); // Loading message history from previous session (percistency)
     }
 
     /*
-    *Fill the history with the content of the history file
-    */
+     * Fill the history with the content of the history file
+     */
     private void fillHistory() {
 
         try {
@@ -45,8 +42,8 @@ public class ChatImpl implements ChatService {
     }
 
     /*
-    * Register the user inside groupe (write in user.txt)
-    */
+     * Register the user inside groupe (write in user.txt)
+     */
     public void join(InfoClient client) throws RemoteException, Exception {
 
         if (isUserJoined(client))
@@ -54,7 +51,6 @@ public class ChatImpl implements ChatService {
 
         try {
             writerUsers = new FileWriter(users, true);
-            // TODO: fix \n on first join
             writerUsers.append("\n" + Integer.toString(client.getId()));
             writerUsers.close();
 
@@ -66,16 +62,14 @@ public class ChatImpl implements ChatService {
     }
 
     /*
-    * Unregister the user of the group (delete inside user.txt)
-    */
+     * Unregister the user of the group (delete inside user.txt)
+     */
     public void leave(InfoClient client) throws RemoteException, Exception {
-        System.out.println("entrou em leave");
         if (!isUserJoined(client))
             throw new Exception("This user doesn't exist"); // user doesn't exist
 
         try {
             removeUser(Integer.toString(client.getId()));
-            System.out.println("user removed");
         } catch (IOException e) {
             System.out.println("Unable to open history");
             System.exit(-1);
@@ -83,8 +77,8 @@ public class ChatImpl implements ChatService {
     }
 
     /*
-    * Send a message (add it both to history.txt and to the list)
-    */
+     * Send a message (add it both to history.txt and to the list)
+     */
     public void send(String message, InfoClient sender) throws RemoteException, Exception {
         if (!isUserJoined(sender))
             throw new Exception("You are not in the chatgroup");
@@ -102,7 +96,6 @@ public class ChatImpl implements ChatService {
         }
     }
 
-    // TODO:fix array null lines
     public ArrayList<String> getHistory(InfoClient client) throws RemoteException, Exception {
         if (!isUserJoined(client))
             throw new Exception("error: you're not in the group");
@@ -110,8 +103,8 @@ public class ChatImpl implements ChatService {
     }
 
     /*
-    * Return true if the used is inside the group (inside user.txt)
-    */
+     * Return true if the used is inside the group (inside user.txt)
+     */
     public boolean isUserJoined(InfoClient client) {
         String line;
         try {
@@ -119,8 +112,6 @@ public class ChatImpl implements ChatService {
 
             while ((line = readerUsers.readLine()) != null) {
                 if (line.equals(Integer.toString(client.getId()))) {
-
-                    System.out.println("encontrou user");
                     return true;
                 }
             }
@@ -135,8 +126,8 @@ public class ChatImpl implements ChatService {
     }
 
     /*
-    * Delete the specified user from the group (users.txt)
-    */
+     * Delete the specified user from the group (users.txt)
+     */
     public void removeUser(String lineContent) throws IOException {
         File updatedUsersFile = new File("updatedUsers.txt");
 
@@ -146,7 +137,7 @@ public class ChatImpl implements ChatService {
         String currentLine;
 
         while ((currentLine = readerUsers.readLine()) != null) {
-            // trim newline when comparing with lineToRemove
+
             String trimmedLine = currentLine.trim();
             if (!trimmedLine.equals(lineContent)) {
                 w.write(currentLine + System.getProperty("line.separator"));
