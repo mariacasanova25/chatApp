@@ -12,7 +12,10 @@ List of software and/or hardware required to compile the project.
 
 <h3> Compiling </h3> 
 
-Step-by-step instructions on how to compile the project.
+In this project, we have created a folder "classes" that contain all the classses compiled. So to compile the sources: 
+```
+javac -d classes -cp classes *.java
+```
 
 <h2>Running the Project</h2>
 
