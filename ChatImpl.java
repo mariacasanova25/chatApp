@@ -8,24 +8,25 @@ import java.io.*;
 
 public class ChatImpl implements ChatService {
 
-    // HashMap<Integer, InfoClient> registrationTable;
-    File users;
+    File users; //Store users registered in the group(Since there is only one, there is no need to store couples (user/groups)
     File history;
-    ArrayList<String> historyArray;
+    ArrayList<String> historyArray; //Object sent to the client (instead of passing a file)
     FileWriter writer;
     FileWriter writerUsers;
     BufferedReader readerHistory;
     BufferedReader readerUsers;
 
+
     public ChatImpl() {
-        // registrationTable= new HashMap<Integer, InfoClient>();
         historyArray = new ArrayList<String>();
         users = new File("users.txt");
         history = new File("history.txt");
-
-        fillHistory();
+        fillHistory(); //Loading message history from previous session (percistency)
     }
 
+    /*
+    *Fill the history with the content of the history file
+    */
     private void fillHistory() {
 
         try {
@@ -43,6 +44,9 @@ public class ChatImpl implements ChatService {
         }
     }
 
+    /*
+    * Register the user inside groupe (write in user.txt)
+    */
     public void join(InfoClient client) throws RemoteException, Exception {
 
         if (isUserJoined(client))
@@ -61,6 +65,9 @@ public class ChatImpl implements ChatService {
 
     }
 
+    /*
+    * Unregister the user of the group (delete inside user.txt)
+    */
     public void leave(InfoClient client) throws RemoteException, Exception {
         System.out.println("entrou em leave");
         if (!isUserJoined(client))
@@ -75,6 +82,9 @@ public class ChatImpl implements ChatService {
         }
     }
 
+    /*
+    * Send a message (add it both to history.txt and to the list)
+    */
     public void send(String message, InfoClient sender) throws RemoteException, Exception {
         if (!isUserJoined(sender))
             throw new Exception("You are not in the chatgroup");
@@ -99,6 +109,9 @@ public class ChatImpl implements ChatService {
         return historyArray;
     }
 
+    /*
+    * Return true if the used is inside the group (inside user.txt)
+    */
     public boolean isUserJoined(InfoClient client) {
         String line;
         try {
@@ -121,6 +134,9 @@ public class ChatImpl implements ChatService {
         return false;
     }
 
+    /*
+    * Delete the specified user from the group (users.txt)
+    */
     public void removeUser(String lineContent) throws IOException {
         File updatedUsersFile = new File("updatedUsers.txt");
 
