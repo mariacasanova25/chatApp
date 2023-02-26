@@ -49,9 +49,9 @@ java Server or java -cp classes Serve
 java Client localhost <clientId>
 ```
 <h2> Project Functionalities </h2
-  In this project, clients can join and leave the chatgroup and send messages.
+
   
-  >The commands are:
+  >  In this project, clients can join and leave the chatgroup and send messages. The commands are:
   
   ```
   join
