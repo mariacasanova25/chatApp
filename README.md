@@ -8,7 +8,7 @@ Detailed descriptions on how to compile the project. This is important because a
 
 <h3> Prerequisites </h3> 
 
-List of software and/or hardware required to compile the project.
+To compile this project, you'll need the Java Development Kit (Version 11) and its tool javac. 
 
 <h3> Compiling </h3> 
 
@@ -23,17 +23,35 @@ javac -d classes -cp classes *.java
 Prerequisites
 
 <h3> List of software and/or hardware required to run the project. </h3>
-
+1. Define your CLASSPATH variable, with the path of "classes" folder.
+```
+export CLASSPATH=<yourPath>\classes
+```
+2. Run the rmiregistry 
+```
+rmiregistry &
+``` 
 <h3>Running</h3>
 
+To run this project, you'll need the Java Development Kit (Version 11) and its tool java.
+
 Step-by-step instructions on how to run the project.
+1. Run the Server:
+```
+java Server or java -cp classes Serve
+```
+2. Run the Client: 
+```
+java Client localhost <clientId>
+```
+
 Additional Resources
 
 If applicable, list of additional resources such as documentation, sample code, or related projects.
 
 <h2>Authors</h2>
 
-Maria casanova
+Maria Albino
 Lorteau Erwan
 
 <h2>License</h2> 
