@@ -1,14 +1,12 @@
-
-
-import java.rmi.*; 
+import java.rmi.*;
 import java.rmi.server.*; 
 import java.rmi.registry.*;
 
 public class Server {
 
-  public static void  main(String [] args) {
+  public static void main(String [] args) {
 	  try {
-		  // Create a Hello remote object
+		// Create a Hello remote object
 	    ChatImpl chatImpl = new ChatImpl ();
 	    ChatService chatService = (ChatService) UnicastRemoteObject.exportObject(chatImpl, 0);
 
