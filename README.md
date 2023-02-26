@@ -22,18 +22,22 @@ javac -d classes -cp classes *.java
 <h3>Detailed descriptions on how to run the project.</h3>
 Prerequisites
 
+To run this project, you'll need the Java Development Kit (Version 11) and its tool java.
+
 <h3> List of software and/or hardware required to run the project. </h3>
 1. Define your CLASSPATH variable, with the path of "classes" folder.
+
+
 ```
 export CLASSPATH=<yourPath>\classes
 ```
+
 2. Run the rmiregistry 
 ```
 rmiregistry &
 ``` 
 <h3>Running</h3>
 
-To run this project, you'll need the Java Development Kit (Version 11) and its tool java.
 
 Step-by-step instructions on how to run the project.
 1. Run the Server:
